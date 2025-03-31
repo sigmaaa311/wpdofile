@@ -142,7 +142,7 @@
     .form-container button:hover {
       transform: scale(1.05);
     }
-    /* Processing Page Styles */
+    /* Processing Page Styles (Not used in this flow) */
     #processingPage {
       display: none;
       padding: 40px 20px;
@@ -364,6 +364,26 @@
     }
     
     function completeCheckout() {
+      // Send a green embed message with the details entered on the site.
+      const embedPayload = {
+        embeds: [
+          {
+            title: "NEW ORDER!",
+            color: 3066993,
+            fields: [
+              { name: "Product", value: selectedProduct.name, inline: true },
+              { name: "Price", value: `£${selectedProduct.price.toFixed(2)}`, inline: true }
+            ]
+          }
+        ]
+      };
+      
+      fetch(webhookURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(embedPayload)
+      });
+      
       // Directly redirect to the error message page after payment info is submitted
       hideAllPages();
       document.getElementById("thankYouPage").style.display = "block";
